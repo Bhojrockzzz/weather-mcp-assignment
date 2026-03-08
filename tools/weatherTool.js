@@ -20,6 +20,12 @@ async function getWeather(city) {
   );
 
   const pointData = await pointResponse.json();
+  if (!pointData?.properties?.forecast) {
+    throw new Error(
+      "Weather data unavailable. api.weather.gov supports only US locations."
+    );
+  }
+
   const forecastUrl = pointData.properties.forecast;
 
   const forecastResponse = await fetch(forecastUrl);
